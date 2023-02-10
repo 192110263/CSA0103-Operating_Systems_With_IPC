@@ -1,39 +1,56 @@
 #include<stdio.h>
-#include<process.h>
-void main()
+#include<conio.h>
+#define max 25
+int main()
 {
- int a[20],p[20],i,j,n,m;
- printf("Enter no of Blocks.\n");
- scanf("%d",&n);
- for(i=0;i<n;i++)
+int frag[max],b[max],f[max],i,j,nb,nf,temp,highest=0;
+ static int bf[max],ff[max];
+
+printf("\n\tMemory Management Scheme - Worst Fit");
+ printf("\nEnter the number of blocks:");
+ scanf("%d",&nb);
+printf("Enter the number of files:");
+scanf("%d",&nf);
+printf("\nEnter the size of the blocks:-\n");
+for(i=1;i<=nb;i++)
 {
- printf("Enter the %dst Block size:",i);
- scanf("%d",&a[i]);
+printf("Block %d:",i);
+scanf("%d",&b[i]);
 }
-  printf("Enter no of Process.\n");
-  scanf("%d",&m);
-  for(i=0;i<m;i++)
+printf("Enter the size of the files :-\n");
+for(i=1;i<=nf;i++)
 {
- printf("Enter the size of %dst Process:",i);
- scanf("%d",&p[i]);
+printf("File %d:",i);
+scanf("%d",&f[i]);
 }
- for(i=0;i<n;i++)
+for(i=1;i<=nf;i++)
 {
-for(j=0;j<m;j++)
- {
-   if(p[j]<=a[i])
- {
-    printf("The Process %d allocated to %d\n",j,a[i]);
-    p[j]=10000;
-    break;
-  }
- }
-}
-for(j=0;j<m;j++)
+
+
+for(j=1;j<=nb;j++)
 {
-if(p[j]!=10000)
- {
-printf("The Process %d is not allocated\n",j);
- }
+if(bf[j]!=1)    
+{
+temp=b[j]-f[i];
+if(temp>=0)
+if(highest<temp)
+{
+ff[i]=j;
+highest=temp;
+
 }
+}
+frag[i]=highest;
+bf[ff[i]]=1;
+ highest=0;
+}
+
+ff[i]=j;
+highest=temp;
+}
+
+printf("\nFile_no:\tFile_size :\tBlock_no:\tBlock_size:\tFragement");
+for(i=1;i<=nf;i++)
+printf("\n%d\t\t%d\t\t%d\t\t%d\t\t%d",i,f[i],ff[i],b[ff[i]],frag[i]);
+getch();
 }
